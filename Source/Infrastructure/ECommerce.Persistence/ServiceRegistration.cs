@@ -13,12 +13,12 @@ namespace ECommerce.Persistence
             serviceCollection.AddDbContext<ECommerceDbContext>(options =>
                 options.UseNpgsql(Configuration.ConnectionString), ServiceLifetime.Singleton);
 
-            serviceCollection.AddSingleton<ICustomerReadRepository, CustomerReadRepository>();
-            serviceCollection.AddSingleton<ICustomerWriteRepository, CustomerWriteRepository>();
-            serviceCollection.AddSingleton<IOrderReadRepository, OrderReadRepository>();
-            serviceCollection.AddSingleton<IOrderWriteRepository, OrderWriteRepository>();
-            serviceCollection.AddSingleton<IProductReadRepository, ProductReadRepository>();
-            serviceCollection.AddSingleton<IProductWriteRepository, ProductWriteRepository>();
+            serviceCollection.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
+            serviceCollection.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
+            serviceCollection.AddScoped<IOrderReadRepository, OrderReadRepository>();
+            serviceCollection.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
+            serviceCollection.AddScoped<IProductReadRepository, ProductReadRepository>();
+            serviceCollection.AddScoped<IProductWriteRepository, ProductWriteRepository>();
         }
     }
 }
