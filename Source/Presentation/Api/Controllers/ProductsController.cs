@@ -19,7 +19,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task Get()
+        public async Task GetAll()
         {
             await _productWriteRepository.AddRangeAsync(new()
             {
@@ -27,6 +27,13 @@ namespace Api.Controllers
                 new() { Id = Guid.NewGuid(), Name = "Product2", Price = 80, CreateDate = DateTime.UtcNow, Stock = 7 },
             });
 
+            await _productWriteRepository.SaveAsync();
+        }
+
+        [HttpGet]
+        public async Task Get()
+        {
+            await _productWriteRepository.AddAsync(new() { Name = "C Product", Price = 1.20F, Stock = 10 });
             await _productWriteRepository.SaveAsync();
         }
     }
