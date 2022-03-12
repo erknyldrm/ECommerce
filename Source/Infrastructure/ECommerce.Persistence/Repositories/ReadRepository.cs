@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace ECommerce.Persistence.Repositories
 {
-    public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity 
+    public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity
     {
         private readonly ECommerceDbContext _context;
 
@@ -17,12 +17,42 @@ namespace ECommerce.Persistence.Repositories
 
         public DbSet<T> Table => _context.Set<T>();
 
-        public IQueryable<T> GetAll() => Table;
+        public IQueryable<T> GetAll(bool tracking = true)
+        {
+            var query = _context.Set<T>().AsQueryable();
 
-        public async Task<T> GetByIdAsync(string id) => await Table.FindAsync(Guid.Parse(id));
+            if (!tracking)
+                query = query.AsNoTracking();
 
-        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression) => await Table.SingleOrDefaultAsync(expression);
+            return query;
+        }
 
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> expression) => Table.Where(expression);
+        public async Task<T> GetByIdAsync(string id, bool tracking = true)
+        {
+            var query = Table.AsQueryable();
+            if (!tracking)
+                query = query.AsNoTracking();
+
+            return await query.FirstOrDefaultAsync(p=>p.Id == Guid.Parse(id));
+        }
+
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression, bool tracking = true)
+        {
+            var query = Table.AsQueryable();
+            if (!tracking)
+                query = query.AsNoTracking();
+
+            return await query.FirstOrDefaultAsync(expression);
+
+        }
+
+        public IQueryable<T> GetWhere(Expression<Func<T, bool>> expression, bool tracking = true)
+        {
+            var query = Table.Where(expression);
+            if (!tracking)
+                query = query.AsNoTracking();
+
+            return query;
+        }
     }
 }
