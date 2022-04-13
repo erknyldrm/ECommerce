@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+
 declare var $: any
+
 
 @Component({
   selector: 'app-root',
@@ -8,4 +11,11 @@ declare var $: any
 })
 export class AppComponent {
   title = 'Client';
+
+  constructor(private toastr: ToastrService) {
+    toastr.success("aq")
+
+  }
 }
+
+
