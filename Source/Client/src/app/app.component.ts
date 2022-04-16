@@ -12,9 +12,7 @@ declare var $: any
 export class AppComponent {
   title = 'Client';
 
-  constructor(private toastr: ToastrService) {
-    toastr.success("aq")
-
+  constructor() {
   }
 }
 
