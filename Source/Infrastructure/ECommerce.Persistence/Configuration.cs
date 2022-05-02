@@ -9,7 +9,9 @@ namespace ECommerce.Persistence
             get
             {
                 ConfigurationManager configurationManager = new();
-                configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../../Presentation/Api"));
+            
+                configurationManager.SetBasePath("C:\\Users\\erkan\\Documents\\Visual Studio 2022\\Projects\\ECommerce\\Source\\Presentation\\Api");
+                //  configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../../Presentation/Api"));
                 configurationManager.AddJsonFile("appsettings.json");
                 return configurationManager.GetConnectionString("PostgreSql");
             }
