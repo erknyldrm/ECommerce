@@ -32,6 +32,7 @@ export class CreateComponent implements OnInit {
         messageType:MessageType.Success,
         position:Position.TopRight
       });
+
       this.createdProduct.emit(create_product);
     },errorMessage => {
       this.alertify.message(errorMessage,{dismissOthers:true,messageType:MessageType.Error,position:Position.TopRight})

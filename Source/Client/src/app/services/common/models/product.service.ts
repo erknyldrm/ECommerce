@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
 import { Create_Product } from 'src/app/contracts/create_product';
 import { List_Product } from 'src/app/contracts/list_product';
-import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +10,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ProductService {
   constructor(private httpClientService: HttpClientService) {}
 
+
   create(product: Create_Product, successCallBack?: () => void, errorCallBack? : (errorMessage :string)=> void) {
     this.httpClientService
-      .post(
-        {
-          controller: 'products',
-        },
-        product
-      )
       .subscribe((result) => {
         successCallBack();
       }, (errorResponse : HttpErrorResponse) =>{
