@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Create_Product } from 'src/app/contracts/create_product';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
@@ -32,13 +32,12 @@ export class CreateComponent implements OnInit {
         messageType:MessageType.Success,
         position:Position.TopRight
       });
+
+      this.createdProduct.emit(create_product);
     },errorMessage => {
-      this.alertify.message(errorMessage,
-        {
-          dismissOthers:true,
-          messageType:MessageType.Error,
-          position:Position.TopRight
-        })
+      this.alertify.message(errorMessage,{dismissOthers:true,messageType:MessageType.Error,position:Position.TopRight})
     });
   }
+
+  @Output() createdProduct : EventEmitter<Create_Product> = new EventEmitter();
 }
