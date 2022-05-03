@@ -1,4 +1,5 @@
 ﻿using ECommerce.Application.Repositories;
+using ECommerce.Application.RequestParameters;
 using ECommerce.Application.ViewModels.Products;
 using ECommerce.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        [Route("GetAll")]
         public async Task GetAll()
         {
             await _productWriteRepository.AddRangeAsync(new()
@@ -32,9 +34,35 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery]Pagination pagination)
         {
-            return Ok(_productReadRepository.GetAll(false));
+            List<Product> items = new()
+            {
+                new() { Id = Guid.NewGuid(), Name = "Product1", Price = 100, CreateDate = DateTime.UtcNow, UpdatedDate = DateTime.Now, Stock = 10 },
+                new() { Id = Guid.NewGuid(), Name = "Product2", Price = 80, CreateDate = DateTime.UtcNow, UpdatedDate = DateTime.Now, Stock = 7 },
+                new() { Id = Guid.NewGuid(), Name = "Product3", Price = 150, CreateDate = DateTime.UtcNow, UpdatedDate = DateTime.Now, Stock = 2 },
+            };
+            // var entities = _productReadRepository.GetAll(false);
+            // var entitiesCount = _productReadRepository.GetAll(false);
+            var entities = items;
+
+
+            var totalCount = entities.Count();  
+            var products = entities.Select(x => new
+            {
+                x.Id,
+                x.Name,
+                x.Stock,
+                x.Price,
+                x.CreateDate,
+                x.UpdatedDate
+            }).Skip(pagination.Page * pagination.Size).Take(pagination.Size);
+
+            return Ok(new
+            {
+                products,
+                totalCount
+            });
         }
 
         [HttpGet("{id}")]
