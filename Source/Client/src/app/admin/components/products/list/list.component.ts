@@ -26,6 +26,9 @@ export class ListComponent implements OnInit {
     'price',
     'createDate',
     'updatedDate',
+    'update',
+    'delete'
+
   ];
   dataSource: MatTableDataSource<List_Product> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
