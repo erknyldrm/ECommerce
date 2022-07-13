@@ -19,6 +19,13 @@ namespace ECommerce.Persistence
             serviceCollection.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
             serviceCollection.AddScoped<IProductReadRepository, ProductReadRepository>();
             serviceCollection.AddScoped<IProductWriteRepository, ProductWriteRepository>();
+
+            serviceCollection.AddScoped<IFileReadRepository, FileReadRepository>();
+            serviceCollection.AddScoped<IFileWriteRepository, FileWriteRepository>();
+            serviceCollection.AddScoped<IProductImageFileReadRepository, ProductImageFileReadRepository>();
+            serviceCollection.AddScoped<IProductImageFileWriteRepository, ProductImageFileWriteRepository>();
+            serviceCollection.AddScoped<IInvoiceFileReadRepository, InvoiceFileReadRepository>();
+            serviceCollection.AddScoped<IInvoiceFileWriteRepository, InvoiceFileWriteRepository>();
         }
     }
 }
