@@ -3,6 +3,7 @@ using ECommerce.Persistence.Contexts;
 using Microsoft.Extensions.DependencyInjection;
 using ECommerce.Application.Repositories;
 using ECommerce.Persistence.Repositories;
+using ECommerce.Domain.Entities.Identity;
 
 namespace ECommerce.Persistence
 {
@@ -12,6 +13,13 @@ namespace ECommerce.Persistence
         {
             serviceCollection.AddDbContext<ECommerceDbContext>(options =>
                 options.UseNpgsql(Configuration.ConnectionString), ServiceLifetime.Singleton);
+
+            serviceCollection.AddIdentity<AppUser, AppRole>(opt =>
+            {
+                opt.Password.RequiredLength = 3;
+                opt.Password.RequireNonAlphanumeric = false;
+            })
+            .AddEntityFrameworkStores<ECommerceDbContext>();
 
             serviceCollection.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
             serviceCollection.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
