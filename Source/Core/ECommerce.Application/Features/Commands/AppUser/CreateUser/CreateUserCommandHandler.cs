@@ -1,34 +1,34 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using ECommerce.Application.Abstractions.Services;
+using ECommerce.Application.DTOs;
+using MediatR;
 
 
 namespace ECommerce.Application.Features.Commands.AppUser.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
     {
-        private readonly UserManager<Domain.Entities.Identity.AppUser> _userManager;
+        private readonly IUserService _userService;
 
-        public CreateUserCommandHandler(UserManager<Domain.Entities.Identity.AppUser> userManager)
+        public CreateUserCommandHandler(IUserService userService)
         {
-            _userManager = userManager;
+            _userService = userService;
         }
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
-           var result = await _userManager.CreateAsync(new()
+            CreateUserResponse response = await _userService.CreateAsync(new()
             {
-                Id = Guid.NewGuid().ToString(),
-                UserName = request.Username,
                 Email = request.Email,
                 NameSurname = request.NameSurname,
-                
-            },request.Password);
-
+                Username = request.Username,
+                Password = request.Password,
+                PasswordConfirm = request.PasswordConfirm
+            });
 
             return new()
             {
-                 Succeeded = result.Succeeded,
-                 Message = result.Succeeded ? "Successful" : String.Join(",", result.Errors.Select(p => p.Description))
+                Message = response.Message,
+                Succeeded = response.Succeeded
             };
         }
     }

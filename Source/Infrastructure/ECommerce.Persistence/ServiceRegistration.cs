@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ECommerce.Application.Repositories;
 using ECommerce.Persistence.Repositories;
 using ECommerce.Domain.Entities.Identity;
+using ECommerce.Application.Abstractions.Services;
+using ECommerce.Persistence.Services;
 
 namespace ECommerce.Persistence
 {
@@ -34,6 +36,7 @@ namespace ECommerce.Persistence
             serviceCollection.AddScoped<IProductImageFileWriteRepository, ProductImageFileWriteRepository>();
             serviceCollection.AddScoped<IInvoiceFileReadRepository, InvoiceFileReadRepository>();
             serviceCollection.AddScoped<IInvoiceFileWriteRepository, InvoiceFileWriteRepository>();
+            serviceCollection.AddScoped<IUserService, UserService>();
         }
     }
 }
