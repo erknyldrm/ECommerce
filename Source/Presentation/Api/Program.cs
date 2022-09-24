@@ -6,6 +6,7 @@ using ECommerce.Infrastructure.Filters;
 using ECommerce.Infrastructure.Services.Storage.Local;
 using ECommerce.Persistence;
 using FluentValidation.AspNetCore;
+using Api.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,6 +42,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureExceptionHandler(app.Services.GetRequiredService<ILogger<Program>>());
 
 app.UseCors();
 app.UseHttpsRedirection();
