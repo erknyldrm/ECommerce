@@ -1,5 +1,7 @@
-﻿using ECommerce.Application.Abstractions.Storage;
+﻿using ECommerce.Application.Abstractions.Services;
+using ECommerce.Application.Abstractions.Storage;
 using ECommerce.Infrastructure.Enums;
+using ECommerce.Infrastructure.Services;
 using ECommerce.Infrastructure.Services.Storage;
 using ECommerce.Infrastructure.Services.Storage.Azure;
 using ECommerce.Infrastructure.Services.Storage.Local;
@@ -12,6 +14,7 @@ namespace ECommerce.Infrastructure
         public static void AddInfrastructureService(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IStorageService, StorageService>();
+            serviceCollection.AddScoped<IMailService, MailService>();
         }
 
         public static void AddStorage<T>(this IServiceCollection serviceCollection) where T : Storage, IStorage
